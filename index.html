@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Deal Qualifier</title>
+<title>Deal Qualifier — rental property deal analysis</title>
+<meta name="description" content="Run a rental property through FHA, conventional owner-occupied, conventional investor and DSCR financing side by side. Enter an address and get value, tax and per-unit rent estimates filled in automatically.">
+<meta name="theme-color" content="#f6f3ed">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 100 100&quot;%3E%3Ctext y=&quot;.9em&quot; font-size=&quot;90&quot;%3E%F0%9F%8F%98%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Deal Qualifier">
+<meta property="og:description" content="Rental property deal analysis across FHA, conventional and DSCR financing, with automatic address lookup for value, taxes and per-unit rent.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deal Qualifier">
+<meta name="twitter:description" content="Rental property deal analysis across FHA, conventional and DSCR financing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -700,6 +710,10 @@
   .lookup-status.show { display: block; }
   .lookup-status.err { background: var(--fail-bg); color: var(--fail); }
   .lookup-status.ok { background: var(--pass-bg); color: var(--pass); }
+  /* Rate limits and budget pauses are temporary and not the visitor's
+     fault — amber, not red, so they read as "come back later" rather than
+     "this is broken." */
+  .lookup-status.warn { background: var(--warn-bg); color: var(--warn); }
   .lookup-status .fine { display: block; margin-top: 4px; font-size: 12px; opacity: 0.85; }
   .btn-primary[disabled] { opacity: 0.55; cursor: default; }
 </style>
@@ -991,13 +1005,30 @@
 </div>
 
 <script>
-  // Set this to your Cloudflare Turnstile SITE key (not the secret key —
-  // that one lives server-side in TURNSTILE_SECRET_KEY, never here) to
-  // require a bot check before a lookup is allowed to spend an API call.
-  // Leave blank and the widget just doesn't render — lookups work exactly
-  // as before, with no bot check. Free, no usage cap, ~5 min setup — see
-  // README "Scaling to real traffic."
-  const TURNSTILE_SITE_KEY = "";
+  // The Cloudflare Turnstile SITE key (public by design — it's rendered
+  // into the widget; the SECRET key lives only in TURNSTILE_SECRET_KEY on
+  // the server and never appears here).
+  //
+  // This is fetched from /api/config at load rather than pasted in below,
+  // so the key is set once as an environment variable in your hosting
+  // dashboard instead of being hand-edited into this file before every
+  // deploy. The fallback constant is only for running this file straight
+  // off the filesystem with no serverless functions behind it.
+  let TURNSTILE_SITE_KEY = "";
+  let SITE_CONFIG = { turnstileSiteKey: "", autocompleteEnabled: true, lookupLimitPerDay: 20 };
+
+  async function loadSiteConfig() {
+    try {
+      const res = await fetch("/api/config", { cache: "no-store" });
+      if (!res.ok) return;
+      const cfg = await res.json();
+      SITE_CONFIG = { ...SITE_CONFIG, ...cfg };
+      TURNSTILE_SITE_KEY = cfg.turnstileSiteKey || "";
+    } catch (e) {
+      // No config endpoint (opened as a local file, or the function is
+      // down) — the page still works, just without the bot check.
+    }
+  }
 
   const STORE_KEY = "quadplex-qualifier-v1";
   let state = null;
@@ -1417,10 +1448,37 @@
       let url = "/api/lookup?address=" + encodeURIComponent(address);
       if (turnstileToken) url += "&turnstileToken=" + encodeURIComponent(turnstileToken);
       const res = await fetch(url);
-      data = await res.json();
-      if (!res.ok) throw new Error(data.error || ("HTTP " + res.status));
+      data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        // Rate limits and budget exhaustion aren't errors the visitor did
+        // anything wrong to cause, and they aren't permanent — say what's
+        // happening and when to come back, instead of showing them a
+        // generic failure and a suggestion to check server config they
+        // don't have access to.
+        const wait = data.retryAfterSeconds
+          ? (data.retryAfterSeconds > 3600
+              ? `About ${Math.round(data.retryAfterSeconds / 3600)} hour(s).`
+              : `About ${Math.max(1, Math.round(data.retryAfterSeconds / 60))} minute(s).`)
+          : "";
+
+        if (res.status === 429) {
+          setLookupStatus("warn", escapeHtml(data.error || "Too many lookups.") + (wait ? `<span class="fine">Try again in: ${escapeHtml(wait)} You can still fill everything in by hand in the meantime.</span>` : ""));
+        } else if (res.status === 503) {
+          setLookupStatus("warn", escapeHtml(data.error || "Lookups are temporarily unavailable.") + `<span class="fine">The calculator still works — fill the fields in manually.</span>`);
+        } else if (res.status === 403) {
+          setLookupStatus("err", escapeHtml(data.error || "Verification failed.") + `<span class="fine">${data.retryable ? "Hit Look up again to retry." : "Reload the page and try once more."}</span>`);
+        } else {
+          setLookupStatus("err", "Lookup failed: " + escapeHtml(data.error || ("HTTP " + res.status)) + `<span class="fine">Check that the address is a full US street address, including city and state.</span>`);
+        }
+
+        btn.disabled = false;
+        btn.textContent = "Look up";
+        if (window.turnstile && TURNSTILE_SITE_KEY) window.turnstile.reset();
+        return;
+      }
     } catch (e) {
-      setLookupStatus("err", "Lookup failed: " + escapeHtml(e.message) + `<span class="fine">Check that RENTCAST_API_KEY is set on the server and that the address is a full US street address.</span>`);
+      setLookupStatus("err", "Lookup failed: " + escapeHtml(e.message) + `<span class="fine">Check your connection and try again — the calculator below still works without a lookup.</span>`);
       btn.disabled = false;
       btn.textContent = "Look up";
       if (window.turnstile && TURNSTILE_SITE_KEY) window.turnstile.reset();
@@ -1839,7 +1897,7 @@
     } catch (e) { return u.slice(0, 30); }
   }
 
-  function init() {
+  async function init() {
     state = loadState();
     applySeeds();
     fillAssumptionsForm(state.assumptions);
@@ -1857,6 +1915,7 @@
     });
     onProgramChange();
 
+    await loadSiteConfig();
     setupTurnstile();
 
     const addrInput = document.getElementById("lookup_address");

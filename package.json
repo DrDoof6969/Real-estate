@@ -1,10 +1,15 @@
 {
   "name": "deal-qualifier",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Self-hosted rental deal qualifier with a RentCast address lookup.",
+  "description": "Self-hosted rental deal qualifier with a RentCast address lookup, shared caching, spend budgets and bot protection.",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "dev": "vercel dev"
+    "dev": "vercel dev",
+    "deploy": "vercel --prod",
+    "test": "node test/smoke.test.js"
   }
 }

@@ -1,0 +1,10 @@
+# The calculator itself is worth indexing. The API endpoints are not —
+# they cost money per call, and a crawler working through them is the
+# cheapest possible way to burn a RentCast budget.
+User-agent: *
+Allow: /$
+Disallow: /api/
+
+# Crawl-delay is advisory and most crawlers ignore it, which is exactly
+# why the real protection is the rate limiter, not this file.
+Crawl-delay: 10
