@@ -1,0 +1,10 @@
+{
+  "name": "deal-qualifier",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Self-hosted rental deal qualifier with a RentCast address lookup.",
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}

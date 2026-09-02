@@ -1,0 +1,1876 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deal Qualifier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f3ed;
+    --paper-raised: #fbfaf6;
+    --paper-sunk: #eae4d8;
+    --ink: #2b241c;
+    --ink-soft: #6c6252;
+    --ink-faint: #9c927e;
+    --line: #e1d9c9;
+    --line-strong: #c9bda3;
+    --accent: #8f6d38;
+    --accent-lt: #d8bd82;
+    --accent-ink: #fdf8ee;
+    --accent-soft: #ecdfc0;
+    --focus: #8f6d38;
+
+    --pass: #4c7355;
+    --pass-bg: #e6ede1;
+    --pass-line: #c3d5bc;
+    --warn: #9c721c;
+    --warn-bg: #f2e7c7;
+    --warn-line: #ddc489;
+    --fail: #a34a30;
+    --fail-bg: #f3ded2;
+    --fail-line: #dfb49f;
+    --note: #6c6252;
+    --note-bg: #eae4d8;
+    --note-line: #c9bda3;
+
+    --brass-1: #e6cf98; --brass-2: #93712e;
+    --steel-1: #e6ebee; --steel-2: #7c8994;
+    --walnut-1: #9a6c47; --walnut-2: #452e1c;
+    --slate-1: #6b7681; --slate-2: #303840;
+
+    --marble-veins:
+      radial-gradient(1100px 700px at 12% -8%, rgba(90,76,48,0.06), transparent 55%),
+      radial-gradient(900px 650px at 92% 6%, rgba(90,76,48,0.05), transparent 55%),
+      radial-gradient(800px 900px at 45% 118%, rgba(90,76,48,0.04), transparent 60%),
+      linear-gradient(118deg, transparent 29%, rgba(80,68,44,0.05) 30%, transparent 31.4%),
+      linear-gradient(73deg, transparent 52%, rgba(80,68,44,0.04) 52.6%, transparent 54%),
+      linear-gradient(160deg, transparent 68%, rgba(80,68,44,0.035) 68.6%, transparent 70%),
+      linear-gradient(35deg, transparent 82%, rgba(80,68,44,0.03) 82.5%, transparent 84%);
+
+    --shadow: 0 1px 2px rgba(40, 32, 18, 0.07), 0 6px 20px rgba(40, 32, 18, 0.06);
+    --radius: 10px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #17140f;
+      --paper-raised: #1e1a14;
+      --paper-sunk: #120f0b;
+      --ink: #ece4d4;
+      --ink-soft: #ac9f89;
+      --ink-faint: #766c5b;
+      --line: #332c22;
+      --line-strong: #453c2d;
+      --accent: #cbaa64;
+      --accent-lt: #e6cf98;
+      --accent-ink: #1c1710;
+      --accent-soft: #2e2718;
+      --focus: #cbaa64;
+
+      --pass: #85b28a;
+      --pass-bg: #1c2a1d;
+      --pass-line: #33452f;
+      --warn: #d3ab5c;
+      --warn-bg: #2f2515;
+      --warn-line: #4a3a1e;
+      --fail: #d4917a;
+      --fail-bg: #302019;
+      --fail-line: #4a3226;
+      --note: #ac9f89;
+      --note-bg: #241f17;
+      --note-line: #453c2d;
+
+      --brass-1: #6b5527; --brass-2: #e6cf98;
+      --steel-1: #444c53; --steel-2: #b6c0c7;
+      --walnut-1: #3a2716; --walnut-2: #9a6c47;
+      --slate-1: #2a3037; --slate-2: #8b96a0;
+
+      --marble-veins:
+        radial-gradient(1100px 700px at 12% -8%, rgba(255,255,255,0.035), transparent 55%),
+        radial-gradient(900px 650px at 92% 6%, rgba(255,255,255,0.03), transparent 55%),
+        radial-gradient(800px 900px at 45% 118%, rgba(255,255,255,0.025), transparent 60%),
+        linear-gradient(118deg, transparent 29%, rgba(255,255,255,0.025) 30%, transparent 31.4%),
+        linear-gradient(73deg, transparent 52%, rgba(255,255,255,0.02) 52.6%, transparent 54%),
+        linear-gradient(160deg, transparent 68%, rgba(255,255,255,0.018) 68.6%, transparent 70%);
+
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #17140f;
+    --paper-raised: #1e1a14;
+    --paper-sunk: #120f0b;
+    --ink: #ece4d4;
+    --ink-soft: #ac9f89;
+    --ink-faint: #766c5b;
+    --line: #332c22;
+    --line-strong: #453c2d;
+    --accent: #cbaa64;
+    --accent-lt: #e6cf98;
+    --accent-ink: #1c1710;
+    --accent-soft: #2e2718;
+    --focus: #cbaa64;
+
+    --pass: #85b28a;
+    --pass-bg: #1c2a1d;
+    --pass-line: #33452f;
+    --warn: #d3ab5c;
+    --warn-bg: #2f2515;
+    --warn-line: #4a3a1e;
+    --fail: #d4917a;
+    --fail-bg: #302019;
+    --fail-line: #4a3226;
+    --note: #ac9f89;
+    --note-bg: #241f17;
+    --note-line: #453c2d;
+
+    --brass-1: #6b5527; --brass-2: #e6cf98;
+    --steel-1: #444c53; --steel-2: #b6c0c7;
+    --walnut-1: #3a2716; --walnut-2: #9a6c47;
+    --slate-1: #2a3037; --slate-2: #8b96a0;
+
+    --marble-veins:
+      radial-gradient(1100px 700px at 12% -8%, rgba(255,255,255,0.035), transparent 55%),
+      radial-gradient(900px 650px at 92% 6%, rgba(255,255,255,0.03), transparent 55%),
+      radial-gradient(800px 900px at 45% 118%, rgba(255,255,255,0.025), transparent 60%),
+      linear-gradient(118deg, transparent 29%, rgba(255,255,255,0.025) 30%, transparent 31.4%),
+      linear-gradient(73deg, transparent 52%, rgba(255,255,255,0.02) 52.6%, transparent 54%),
+      linear-gradient(160deg, transparent 68%, rgba(255,255,255,0.018) 68.6%, transparent 70%);
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: var(--paper);
+    background-image: var(--marble-veins);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: "Work Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  ::selection { background: var(--accent-soft); }
+
+  a { color: var(--accent); }
+
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 20px 96px;
+  }
+
+  /* ---------- Masthead ---------- */
+
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 4px solid transparent;
+    border-image: linear-gradient(90deg, var(--line-strong), var(--accent-lt) 12%, var(--accent) 30%, var(--accent) 70%, var(--accent-lt) 88%, var(--line-strong)) 1;
+    margin-bottom: 28px;
+  }
+
+  .material-swatch {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border-radius: 3px;
+    margin-right: 7px;
+    vertical-align: -2px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12);
+  }
+  .material-swatch.brass  { background: linear-gradient(135deg, var(--brass-1), var(--brass-2)); }
+  .material-swatch.steel  { background: linear-gradient(135deg, var(--steel-1), var(--steel-2)); }
+  .material-swatch.walnut { background: linear-gradient(135deg, var(--walnut-1), var(--walnut-2)); }
+  .material-swatch.slate  { background: linear-gradient(135deg, var(--slate-1), var(--slate-2)); }
+
+  .masthead h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(28px, 4vw, 38px);
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+
+  .masthead p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    max-width: 50ch;
+  }
+
+  .masthead .mark {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    text-align: right;
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+
+  /* ---------- Summary strip ---------- */
+
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .summary .stat {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+
+  .summary .stat .n {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 22px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+
+  .summary .stat .l {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+  }
+
+  .summary .stat.pass .n { color: var(--pass); }
+  .summary .stat.warn .n { color: var(--warn); }
+  .summary .stat.fail .n { color: var(--fail); }
+
+  /* ---------- Sections / cards ---------- */
+
+  section.panel {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+  }
+
+  .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .panel-head h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .panel-head .hint {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .chev {
+    color: var(--ink-faint);
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+  }
+  .panel.open .chev { transform: rotate(90deg); }
+
+  .panel-body {
+    padding: 4px 18px 18px;
+    border-top: 1px solid var(--line);
+  }
+  .panel:not(.open) .panel-body { display: none; }
+  .panel:not(.open) .panel-head { padding-bottom: 14px; }
+  .panel.open .panel-head { border-bottom: none; }
+
+  .subgroup { margin-top: 18px; }
+  .subgroup:first-child { margin-top: 14px; }
+  .subgroup h3 {
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ---------- Forms ---------- */
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px 16px;
+    margin-top: 14px;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field.wide { grid-column: 1 / -1; }
+
+  .field label {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+
+  .field .sub {
+    font-size: 11px;
+    color: var(--ink-faint);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+
+  input[type="text"], input[type="number"], input[type="url"], select {
+    font: inherit;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 8px 10px;
+    width: 100%;
+  }
+
+  .field label + input[type="text"] {
+    font-family: "Work Sans", sans-serif;
+  }
+
+  input:focus, select:focus, button:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 1px;
+  }
+
+  input::placeholder { color: var(--ink-faint); }
+
+  /* .ctrl wraps just the input + its unit label, so the unit stays glued
+     to the input regardless of how many lines the field's label wraps to. */
+  .ctrl { position: relative; display: block; }
+  .prefix-field .u {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-faint);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 14px;
+    pointer-events: none;
+  }
+  .prefix-field input { padding-left: 22px; }
+  .suffix-field .u {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-faint);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    pointer-events: none;
+  }
+  .suffix-field input { padding-right: 26px; }
+
+  button {
+    font: inherit;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    border-radius: 7px;
+    border: 1px solid transparent;
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: opacity 0.15s ease, background 0.15s ease;
+  }
+
+  .btn-primary {
+    background: linear-gradient(180deg, var(--accent-lt), var(--accent));
+    color: var(--accent-ink);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+  .btn-primary:hover { opacity: 0.9; }
+
+  .btn-ghost {
+    background: transparent;
+    border-color: var(--line-strong);
+    color: var(--ink);
+  }
+  .btn-ghost:hover { background: var(--paper-sunk); }
+
+  .btn-text {
+    background: transparent;
+    border: none;
+    color: var(--ink-soft);
+    padding: 6px 8px;
+    font-size: 12.5px;
+  }
+  .btn-text:hover { color: var(--ink); text-decoration: underline; }
+
+  .btn-danger { color: var(--fail); }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  /* ---------- Toolbar ---------- */
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .toolbar h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .toolbar .sort {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+  .toolbar select { width: auto; padding: 6px 8px; font-size: 12.5px; }
+
+  /* ---------- Property cards ---------- */
+
+  .empty {
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    padding: 32px 20px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  .prop-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .prop {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--line-strong);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .prop.green { border-left-color: var(--pass); }
+  .prop.yellow { border-left-color: var(--warn); }
+  .prop.red { border-left-color: var(--fail); }
+
+  .prop-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto auto;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 16px;
+    cursor: pointer;
+  }
+
+  .prop-addr {
+    min-width: 0;
+  }
+  .prop-addr .name {
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .prop-addr a.link {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    text-decoration: none;
+  }
+  .prop-addr a.link:hover { color: var(--accent); text-decoration: underline; }
+
+  .prop-metric { text-align: right; }
+  .prop-metric .v {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .prop-metric .l {
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+  }
+  .prop.green .prop-metric.cushion .v { color: var(--pass); }
+  .prop.yellow .prop-metric.cushion .v { color: var(--warn); }
+  .prop.red .prop-metric.cushion .v { color: var(--fail); }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border: 1px solid transparent;
+  }
+  .pill.pass { background: var(--pass-bg); color: var(--pass); border-color: var(--pass-line); }
+  .pill.warn { background: var(--warn-bg); color: var(--warn); border-color: var(--warn-line); }
+  .pill.fail { background: var(--fail-bg); color: var(--fail); border-color: var(--fail-line); }
+  .pill.note { background: var(--note-bg); color: var(--note); border-color: var(--note-line); }
+
+  .prop-detail {
+    border-top: 1px solid var(--line);
+    padding: 16px;
+    display: none;
+  }
+  .prop.expanded .prop-detail { display: block; }
+  .prop.expanded .chev-mini { transform: rotate(90deg); }
+  .chev-mini {
+    color: var(--ink-faint);
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .breakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 620px) {
+    .breakdown { grid-template-columns: 1fr; }
+    .prop-row { grid-template-columns: 1fr; gap: 8px; text-align: left; }
+    .prop-metric { text-align: left; }
+  }
+
+  .breakdown h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+
+  .lines { border-top: 1px solid var(--line); }
+  .lines .ln {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13.5px;
+  }
+  .lines .ln.total {
+    font-weight: 700;
+    border-bottom: none;
+    border-top: 1px solid var(--line-strong);
+    margin-top: 2px;
+    padding-top: 8px;
+  }
+  .lines .ln .v { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+
+  .verdict-box {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .verdict-box.pass { background: var(--pass-bg); color: var(--pass); }
+  .verdict-box.fail { background: var(--fail-bg); color: var(--fail); }
+  .verdict-box.warn { background: var(--warn-bg); color: var(--warn); }
+  .verdict-box.note { background: var(--accent-soft); color: var(--ink); }
+
+  .cash-block {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .cash-block h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+  .cash-lines { max-width: 460px; }
+  .cash-block .verdict-box { margin-top: 10px; }
+
+  .rec-block {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .rec-block h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+
+  .detail-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  footer {
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--ink-faint);
+    text-align: center;
+  }
+
+  .lookup-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-top: 14px;
+    position: relative;
+  }
+  .lookup-row input { flex: 1; }
+  .lookup-field { position: relative; flex: 1; }
+  .lookup-suggestions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: var(--paper-raised);
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    max-height: 260px;
+    overflow-y: auto;
+    display: none;
+  }
+  .lookup-suggestions.show { display: block; }
+  .lookup-suggestions .opt {
+    padding: 9px 12px;
+    font-size: 13.5px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--line);
+  }
+  .lookup-suggestions .opt:last-child { border-bottom: none; }
+  .lookup-suggestions .opt:hover,
+  .lookup-suggestions .opt.active { background: var(--accent-soft); }
+  .lookup-status {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    background: var(--note-bg);
+    color: var(--note);
+    display: none;
+  }
+  .lookup-status.show { display: block; }
+  .lookup-status.err { background: var(--fail-bg); color: var(--fail); }
+  .lookup-status.ok { background: var(--pass-bg); color: var(--pass); }
+  .lookup-status .fine { display: block; margin-top: 4px; font-size: 12px; opacity: 0.85; }
+  .btn-primary[disabled] { opacity: 0.55; cursor: default; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <h1>Deal Qualifier</h1>
+      <p>Drop in the numbers for a listing. It checks whether the deal actually qualifies for the loan program you'd use — FHA self-sufficiency, conventional owner-occupied, conventional investor, or DSCR — and shows your real monthly cash cushion either way.</p>
+    </div>
+    <div class="mark">4 loan programs<br>portfolio-aware reserves<br>saved on this device</div>
+  </div>
+
+  <div class="summary" id="summary"></div>
+
+  <section class="panel" id="assumptionsPanel">
+    <div class="panel-head" onclick="togglePanel('assumptionsPanel')">
+      <h2>Loan program defaults &amp; portfolio</h2>
+      <span class="hint" id="assumptionsHint"></span>
+      <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="panel-body">
+
+      <div class="subgroup">
+        <h3><span class="material-swatch brass"></span>FHA — owner-occupied, 3.5% down</h3>
+        <div class="grid">
+          <div class="field suffix-field">
+            <label>Down payment</label>
+            <span class="ctrl"><input type="number" id="pf_fha_down" step="0.1" min="0"><span class="u">%</span></span>
+          </div>
+          <div class="field suffix-field">
+            <label>Interest rate</label>
+            <span class="ctrl"><input type="number" id="pf_fha_rate" step="0.01" min="0"><span class="u">%</span></span>
+            <span class="sub">30-yr FHA avg, Aug 2026: 5.38%</span>
+          </div>
+          <div class="field suffix-field">
+            <label>Upfront MIP</label>
+            <span class="ctrl"><input type="number" id="pf_fha_ufmip" step="0.01" min="0"><span class="u">%</span></span>
+            <span class="sub">financed into loan</span>
+          </div>
+          <div class="field suffix-field">
+            <label>Annual MIP</label>
+            <span class="ctrl"><input type="number" id="pf_fha_mip" step="0.01" min="0"><span class="u">%</span></span>
+            <span class="sub">&gt;95% LTV, ≤$726.2k</span>
+          </div>
+          <div class="field suffix-field">
+            <label>Reserves required</label>
+            <span class="ctrl"><input type="number" id="pf_fha_reserve" step="1" min="0"><span class="u">mo PITIA</span></span>
+            <span class="sub">3mo for 3-4 unit; 6mo if DTI &gt;43%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="subgroup">
+        <h3><span class="material-swatch steel"></span>Conventional — owner-occupied 2-4 unit, 5% down</h3>
+        <div class="grid">
+          <div class="field suffix-field">
+            <label>Down payment</label>
+            <span class="ctrl"><input type="number" id="pf_co_down" step="0.1" min="0"><span class="u">%</span></span>
+          </div>
+          <div class="field suffix-field">
+            <label>Interest rate</label>
+            <span class="ctrl"><input type="number" id="pf_co_rate" step="0.01" min="0"><span class="u">%</span></span>
+            <span class="sub">30-yr conventional avg, Aug 2026: 6.68%</span>
+          </div>
+          <div class="field suffix-field">
+            <label>Monthly PMI</label>
+            <span class="ctrl"><input type="number" id="pf_co_mip" step="0.01" min="0"><span class="u">%</span></span>
+            <span class="sub">of loan balance, since &lt;20% down</span>
+          </div>
+          <div class="field suffix-field">
+            <label>Reserves required</label>
+            <span class="ctrl"><input type="number" id="pf_co_reserve" step="1" min="0"><span class="u">mo PITIA</span></span>
+            <span class="sub">Fannie Mae: 6mo for 2-4 unit primary residence</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="subgroup">
+        <h3><span class="material-swatch walnut"></span>Conventional — non-owner-occupied investor, 25% down</h3>
+        <div class="grid">
+          <div class="field suffix-field">
+            <label>Down payment</label>
+            <span class="ctrl"><input type="number" id="pf_ci_down" step="0.1" min="0"><span class="u">%</span></span>
+          </div>
+          <div class="field suffix-field">
+            <label>Interest rate</label>
+            <span class="ctrl"><input type="number" id="pf_ci_rate" step="0.01" min="0"><span class="u">%</span></span>
+            <span class="sub">investment property avg, Aug 2026: 6.25-7.13%</span>
+          </div>
+          <div class="field suffix-field">
+            <label>Monthly PMI</label>
+            <span class="ctrl"><input type="number" id="pf_ci_mip" step="0.01" min="0"><span class="u">%</span></span>
+            <span class="sub">usually 0 at 25%+ down</span>
+          </div>
+          <div class="field suffix-field">
+            <label>Reserves required</label>
+            <span class="ctrl"><input type="number" id="pf_ci_reserve" step="1" min="0"><span class="u">mo PITIA</span></span>
+            <span class="sub">Fannie Mae base: 6mo, before portfolio scaling below</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="subgroup">
+        <h3><span class="material-swatch slate"></span>DSCR — qualifies on the property's rent, not your income</h3>
+        <div class="grid">
+          <div class="field suffix-field">
+            <label>Down payment</label>
+            <span class="ctrl"><input type="number" id="pf_dscr_down" step="0.1" min="0"><span class="u">%</span></span>
+          </div>
+          <div class="field suffix-field">
+            <label>Interest rate</label>
+            <span class="ctrl"><input type="number" id="pf_dscr_rate" step="0.01" min="0"><span class="u">%</span></span>
+            <span class="sub">typical range Aug 2026: 7.0-9.5%</span>
+          </div>
+          <div class="field suffix-field">
+            <label>Reserves required</label>
+            <span class="ctrl"><input type="number" id="pf_dscr_reserve" step="1" min="0"><span class="u">mo PITIA</span></span>
+          </div>
+          <div class="field suffix-field">
+            <label>Min DSCR to close</label>
+            <span class="ctrl"><input type="number" id="pf_dscr_mindscr" step="0.05" min="0"><span class="u">×</span></span>
+            <span class="sub">rent ÷ PITIA, lender floor</span>
+          </div>
+          <div class="field suffix-field">
+            <label>Preferred DSCR</label>
+            <span class="ctrl"><input type="number" id="pf_dscr_prefdscr" step="0.05" min="0"><span class="u">×</span></span>
+            <span class="sub">best pricing tier</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="subgroup">
+        <h3>Test settings — applies to every property</h3>
+        <div class="grid">
+          <div class="field suffix-field">
+            <label>Maintenance reserve</label>
+            <span class="ctrl"><input type="number" id="a_maintPct" step="0.5" min="0"><span class="u">% rent</span></span>
+          </div>
+          <div class="field suffix-field">
+            <label>Vacancy reserve</label>
+            <span class="ctrl"><input type="number" id="a_vacPct" step="0.5" min="0"><span class="u">% rent</span></span>
+          </div>
+          <div class="field prefix-field">
+            <label>Green cushion line</label>
+            <span class="ctrl"><span class="u">$</span><input type="number" id="a_cushion" step="25" min="0"></span>
+            <span class="sub">min monthly buffer to call it "green"</span>
+          </div>
+          <div class="field suffix-field">
+            <label>Closing costs</label>
+            <span class="ctrl"><input type="number" id="a_closingPct" step="0.5" min="0"><span class="u">% price</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="subgroup">
+        <h3>Your portfolio — drives conventional reserve scaling &amp; recommendations</h3>
+        <div class="grid">
+          <div class="field">
+            <label>Other financed properties</label>
+            <input type="number" id="a_portfolioCount" step="1" min="0" placeholder="0">
+            <span class="sub">not counting the one you're evaluating</span>
+          </div>
+          <div class="field prefix-field">
+            <label>Combined balance owed on those</label>
+            <span class="ctrl"><span class="u">$</span><input type="number" id="a_portfolioUPB" step="1000" min="0" placeholder="0"></span>
+            <span class="sub">aggregate unpaid principal, all of them</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="panel open" id="addPanel">
+    <div class="panel-head" onclick="togglePanel('addPanel')">
+      <h2>Add a listing</h2>
+      <span class="hint">price · rent · loan program</span>
+      <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="panel-body">
+      <div class="subgroup" style="margin-top:14px;">
+        <h3><span class="material-swatch slate"></span>Look up an address</h3>
+        <div class="lookup-row">
+          <div class="lookup-field">
+            <input type="text" id="lookup_address" placeholder="Start typing an address…" autocomplete="off">
+            <div class="lookup-suggestions" id="lookup_suggestions"></div>
+          </div>
+          <button class="btn-primary" type="button" id="lookup_btn" onclick="lookupAddress()">Look up</button>
+        </div>
+        <div id="turnstile_container" style="margin-top:10px;"></div>
+        <div class="lookup-status" id="lookup_status"></div>
+      </div>
+      <div class="grid">
+        <div class="field wide">
+          <label>Address / nickname</label>
+          <input type="text" id="f_name" placeholder="e.g. 214 Maple St, Columbia SC">
+        </div>
+        <div class="field wide">
+          <label>Listing link <span class="sub">(optional, just for your reference)</span></label>
+          <input type="url" id="f_link" placeholder="https://www.zillow.com/...">
+        </div>
+        <div class="field prefix-field">
+          <label>Purchase price</label>
+          <span class="ctrl"><span class="u">$</span><input type="number" id="f_price" min="0" step="1000" placeholder="425000"></span>
+        </div>
+        <div class="field prefix-field">
+          <label>Annual property tax</label>
+          <span class="ctrl"><span class="u">$</span><input type="number" id="f_tax" min="0" step="50" placeholder="4200"></span>
+        </div>
+        <div class="field prefix-field">
+          <label>Annual insurance</label>
+          <span class="ctrl"><span class="u">$</span><input type="number" id="f_ins" min="0" step="50" placeholder="2600"></span>
+        </div>
+        <div class="field prefix-field">
+          <label>HOA <span class="sub">/mo</span></label>
+          <span class="ctrl"><span class="u">$</span><input type="number" id="f_hoa" min="0" step="10" placeholder="0"></span>
+        </div>
+        <div class="field prefix-field">
+          <label>Owner-paid utilities <span class="sub">/mo</span></label>
+          <span class="ctrl"><span class="u">$</span><input type="number" id="f_util" min="0" step="10" placeholder="0"></span>
+        </div>
+        <div class="field">
+          <label>Total units</label>
+          <input type="number" id="f_unitCount" min="1" step="1" placeholder="4">
+        </div>
+        <div class="field">
+          <label>You'll live in it?</label>
+          <select id="f_occupied">
+            <option value="yes">Yes — owner-occupied</option>
+            <option value="no">No — pure rental</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Loan program</label>
+          <select id="f_loanProgram" onchange="onProgramChange()">
+            <option value="fha">FHA — 3.5% down, owner-occ</option>
+            <option value="conv_occ">Conventional — 5% down, owner-occ</option>
+            <option value="conv_investor">Conventional — 25% down, investor</option>
+            <option value="dscr">DSCR — investor, rent qualifies you</option>
+          </select>
+        </div>
+        <div class="field prefix-field">
+          <label>Your unit — market rent <span class="sub">only used if owner-occupied</span></label>
+          <span class="ctrl"><span class="u">$</span><input type="number" id="f_ownerRent" min="0" step="25" placeholder="950"></span>
+        </div>
+        <div class="field prefix-field">
+          <label>Tenant rent <span class="sub">combined, all non-owner units /mo</span></label>
+          <span class="ctrl"><span class="u">$</span><input type="number" id="f_tenantRent" min="0" step="25" placeholder="2850"></span>
+        </div>
+        <div class="field suffix-field">
+          <label>Down % override <span class="sub">blank = program default</span></label>
+          <span class="ctrl"><input type="number" id="f_downOverride" step="0.1" min="0"><span class="u">%</span></span>
+        </div>
+        <div class="field suffix-field">
+          <label>Rate % override <span class="sub">blank = program default</span></label>
+          <span class="ctrl"><input type="number" id="f_rateOverride" step="0.01" min="0"><span class="u">%</span></span>
+        </div>
+        <div class="field prefix-field" id="f_fhaLimitWrap">
+          <label>FHA loan limit <span class="sub">optional — this county, this unit count</span></label>
+          <span class="ctrl"><span class="u">$</span><input type="number" id="f_fhaLimit" min="0" step="1000" placeholder="e.g. 1041125"></span>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-ghost" type="button" onclick="clearForm()">Clear</button>
+        <button class="btn-primary" type="button" onclick="addProperty()">Add property</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <h2>Listings</h2>
+    <div class="sort">
+      Sort by
+      <select id="sortSel" onchange="render()">
+        <option value="cushion">Cushion (high → low)</option>
+        <option value="price">Price (low → high)</option>
+        <option value="name">Address (A → Z)</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="propList"></div>
+
+  <footer>Estimates only — actual PITIA, MIP/PMI tier, DSCR floor and appraisal rent schedule come from your lender and appraiser. Everything above is saved locally in this browser only.</footer>
+</div>
+
+<script>
+  // Set this to your Cloudflare Turnstile SITE key (not the secret key —
+  // that one lives server-side in TURNSTILE_SECRET_KEY, never here) to
+  // require a bot check before a lookup is allowed to spend an API call.
+  // Leave blank and the widget just doesn't render — lookups work exactly
+  // as before, with no bot check. Free, no usage cap, ~5 min setup — see
+  // README "Scaling to real traffic."
+  const TURNSTILE_SITE_KEY = "";
+
+  const STORE_KEY = "quadplex-qualifier-v1";
+  let state = null;
+
+  const PROGRAM_LABEL = {
+    fha: "FHA",
+    conv_occ: "Conv 5% down",
+    conv_investor: "Conv investor",
+    dscr: "DSCR"
+  };
+
+  function defaultState() {
+    return {
+      assumptions: {
+        programs: {
+          fha:          { downPct: 3.5, ratePct: 5.38, ufmipPct: 1.75, mipPct: 0.55, reserveMonths: 3 },
+          conv_occ:     { downPct: 5,   ratePct: 6.68, mipPct: 0.5,  reserveMonths: 6 },
+          conv_investor:{ downPct: 25,  ratePct: 6.85, mipPct: 0,    reserveMonths: 6 },
+          dscr:         { downPct: 25,  ratePct: 8.25, mipPct: 0,    reserveMonths: 6, minDscr: 1.0, preferredDscr: 1.25 }
+        },
+        maintPct: 8,
+        vacPct: 5,
+        cushion: 500,
+        closingPct: 3,
+        portfolio: { financedCount: 0, otherUPB: 0 }
+      },
+      properties: [],
+      expanded: {},
+      seededIds: []
+    };
+  }
+
+  // Listings researched in chat get seeded in here once. Each carries a
+  // stable id so a listing is added to your saved records exactly once —
+  // editing or deleting it afterward is permanent and won't be undone by
+  // a future reload, even if this seed list grows later.
+  const SEED_PROPERTIES = [
+    {
+      id: "seed-1658-horseshoe-current-tax",
+      name: "1658 Horseshoe Dr, Columbia SC 29223 (current tax)",
+      link: "https://www.zillow.com/homedetails/1658-Horseshoe-Dr-Columbia-SC-29223/11721466_zpid/",
+      price: 350000, tax: 10558, ins: 3600, hoa: 0, util: 0,
+      unitCount: 4, occupied: true, ownerRent: 950, tenantRent: 2850,
+      loanProgram: "fha", fhaLimit: 1041125
+    },
+    {
+      id: "seed-1658-horseshoe-reassessed-tax",
+      name: "1658 Horseshoe Dr, Columbia SC 29223 (reassessed tax)",
+      link: "https://www.zillow.com/homedetails/1658-Horseshoe-Dr-Columbia-SC-29223/11721466_zpid/",
+      price: 350000, tax: 13438, ins: 3600, hoa: 0, util: 0,
+      unitCount: 4, occupied: true, ownerRent: 950, tenantRent: 2850,
+      loanProgram: "fha", fhaLimit: 1041125
+    },
+    {
+      id: "seed-1030-kinard-current-tax",
+      name: "1030 Kinard Ct, Columbia SC 29201 (current tax)",
+      link: "https://www.zillow.com/homedetails/1030-Kinard-Ct-Columbia-SC-29201/11675835_zpid/",
+      price: 575000, tax: 5137, ins: 5900, hoa: 0, util: 0,
+      unitCount: 4, occupied: true, ownerRent: 1797, tenantRent: 5391,
+      loanProgram: "fha", fhaLimit: 1041125
+    },
+    {
+      id: "seed-1030-kinard-reassessed-tax",
+      name: "1030 Kinard Ct, Columbia SC 29201 (reassessed tax)",
+      link: "https://www.zillow.com/homedetails/1030-Kinard-Ct-Columbia-SC-29201/11675835_zpid/",
+      price: 575000, tax: 16626, ins: 5900, hoa: 0, util: 0,
+      unitCount: 4, occupied: true, ownerRent: 1797, tenantRent: 5391,
+      loanProgram: "fha", fhaLimit: 1041125
+    },
+    {
+      id: "seed-1544-caroline-rd",
+      name: "1544 Caroline Rd, Columbia SC 29209",
+      link: "https://www.zillow.com/homedetails/1544-Caroline-Rd-Columbia-SC-29209/11725305_zpid/",
+      price: 399000, tax: 5949, ins: 4100, hoa: 0, util: 0,
+      unitCount: 4, occupied: true, ownerRent: 1000, tenantRent: 3000,
+      loanProgram: "fha", fhaLimit: 1041125
+    },
+    {
+      id: "seed-6815-valleybrook-duplex-roommates",
+      name: "6815-6817 Valleybrook Dr, Columbia SC 29206 (duplex, 3 roommates in your unit)",
+      link: "https://www.realtor.com/realestateandhomes-detail/6815-Valleybrook-Rd_Columbia_SC_29206_M62686-41337",
+      price: 350000, tax: 10325, ins: 3600, hoa: 0, util: 0,
+      unitCount: 2, occupied: true, ownerRent: 0, tenantRent: 1650,
+      loanProgram: "fha", fhaLimit: 0
+    },
+    {
+      id: "seed-1417-oak-fha",
+      name: "1417 Oak St, Columbia SC 29204 (FHA, owner-occupied)",
+      link: "https://www.realtor.com/realestateandhomes-detail/1417-Oak-St_Columbia_SC_29204_M61408-69016",
+      price: 153999, tax: 4543, ins: 2200, hoa: 0, util: 0,
+      unitCount: 2, occupied: true, ownerRent: 650, tenantRent: 1100,
+      loanProgram: "fha", fhaLimit: 0
+    },
+    {
+      id: "seed-1417-oak-investor",
+      name: "1417 Oak St, Columbia SC 29204 (non-FHA investor, 4 renters)",
+      link: "https://www.realtor.com/realestateandhomes-detail/1417-Oak-St_Columbia_SC_29204_M61408-69016",
+      price: 153999, tax: 4543, ins: 2200, hoa: 0, util: 0,
+      unitCount: 2, occupied: false, ownerRent: 0, tenantRent: 2200,
+      loanProgram: "conv_investor", ratePct: 6.75, fhaLimit: 0
+    }
+  ];
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return migrateState(defaultState());
+      const parsed = JSON.parse(raw);
+      const d = defaultState();
+      const merged = {
+        assumptions: {
+          programs: {
+            fha: Object.assign({}, d.assumptions.programs.fha, (parsed.assumptions && parsed.assumptions.programs && parsed.assumptions.programs.fha) || {}),
+            conv_occ: Object.assign({}, d.assumptions.programs.conv_occ, (parsed.assumptions && parsed.assumptions.programs && parsed.assumptions.programs.conv_occ) || {}),
+            conv_investor: Object.assign({}, d.assumptions.programs.conv_investor, (parsed.assumptions && parsed.assumptions.programs && parsed.assumptions.programs.conv_investor) || {}),
+            dscr: Object.assign({}, d.assumptions.programs.dscr, (parsed.assumptions && parsed.assumptions.programs && parsed.assumptions.programs.dscr) || {})
+          },
+          maintPct: (parsed.assumptions && parsed.assumptions.maintPct) != null ? parsed.assumptions.maintPct : d.assumptions.maintPct,
+          vacPct: (parsed.assumptions && parsed.assumptions.vacPct) != null ? parsed.assumptions.vacPct : d.assumptions.vacPct,
+          cushion: (parsed.assumptions && parsed.assumptions.cushion) != null ? parsed.assumptions.cushion : d.assumptions.cushion,
+          closingPct: (parsed.assumptions && parsed.assumptions.closingPct) != null ? parsed.assumptions.closingPct : d.assumptions.closingPct,
+          portfolio: Object.assign({}, d.assumptions.portfolio, (parsed.assumptions && parsed.assumptions.portfolio) || {})
+        },
+        properties: Array.isArray(parsed.properties) ? parsed.properties : [],
+        expanded: parsed.expanded || {},
+        seededIds: Array.isArray(parsed.seededIds) ? parsed.seededIds : []
+      };
+      return migrateState(merged);
+    } catch (e) {
+      return migrateState(defaultState());
+    }
+  }
+
+  // Carries forward any properties saved under the old schema (useOwnFinancing /
+  // r2,r3,r4 / a single global downPct+ratePct) so nobody's saved records get
+  // silently dropped or miscalculated when this file was rebuilt into a
+  // multi-loan-program tool.
+  function migrateState(s) {
+    s.properties = s.properties.map(p => {
+      if (p.loanProgram) return p; // already new schema
+      const migrated = Object.assign({}, p);
+      const hadOwnFinancing = !!p.useOwnFinancing;
+      migrated.loanProgram = hadOwnFinancing ? "conv_investor" : "fha";
+      migrated.unitCount = p.unitCount || 4;
+      migrated.occupied = p.occupied != null ? p.occupied : !hadOwnFinancing;
+      migrated.ownerRent = p.ownerRent || 0;
+      migrated.tenantRent = (p.r2 || 0) + (p.r3 || 0) + (p.r4 || 0);
+      if (hadOwnFinancing) {
+        if (p.downPct != null) migrated.downPct = p.downPct;
+        if (p.ratePct != null) migrated.ratePct = p.ratePct;
+      }
+      delete migrated.r2; delete migrated.r3; delete migrated.r4;
+      delete migrated.useOwnFinancing; delete migrated.mipPct; delete migrated.reserveMonths;
+      return migrated;
+    });
+    return s;
+  }
+
+  function applySeeds() {
+    let changed = false;
+    SEED_PROPERTIES.forEach(seed => {
+      if (!state.seededIds.includes(seed.id)) {
+        state.properties.push(Object.assign({}, seed));
+        state.seededIds.push(seed.id);
+        changed = true;
+      }
+    });
+    if (changed) saveState();
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    } catch (e) { /* private mode / storage blocked — state still works in memory */ }
+  }
+
+  function fmtMoney(n) {
+    const sign = n < 0 ? "-" : "";
+    const v = Math.abs(Math.round(n));
+    return sign + "$" + v.toLocaleString("en-US");
+  }
+
+  function monthlyPI(loanAmount, annualRatePct, years) {
+    const r = annualRatePct / 100 / 12;
+    const n = years * 12;
+    if (loanAmount <= 0) return 0;
+    if (r === 0) return loanAmount / n;
+    const f = Math.pow(1 + r, n);
+    return loanAmount * (r * f) / (f - 1);
+  }
+
+  function computeProperty(p, a) {
+    const prog = a.programs[p.loanProgram] || a.programs.fha;
+    const downPct = (p.downPct != null && p.downPct !== "") ? p.downPct : prog.downPct;
+    const ratePct = (p.ratePct != null && p.ratePct !== "") ? p.ratePct : prog.ratePct;
+    const ufmipPct = p.loanProgram === "fha" ? (prog.ufmipPct || 0) : 0;
+    const mipPct = prog.mipPct || 0;
+    const reserveMonthsBase = prog.reserveMonths || 0;
+
+    const baseLoan = p.price * (1 - downPct / 100);
+    const ufmip = baseLoan * (ufmipPct / 100);
+    const totalLoan = baseLoan + ufmip;
+    const pi = monthlyPI(totalLoan, ratePct, 30);
+    const monthlyTax = (p.tax || 0) / 12;
+    const monthlyIns = (p.ins || 0) / 12;
+    const monthlyMip = baseLoan * (mipPct / 100) / 12;
+    const hoa = p.hoa || 0;
+    const pitia = pi + monthlyTax + monthlyIns + monthlyMip + hoa;
+
+    const ownerRent = p.occupied ? (p.ownerRent || 0) : 0;
+    const tenantRent = p.tenantRent || 0;
+    const totalGrossRent = ownerRent + tenantRent;
+
+    // FHA's 75%-of-rent self-sufficiency test only applies to owner-occupied
+    // 3-4 unit FHA purchases — not duplexes, not conventional, not DSCR.
+    const selfSuffApplies = p.loanProgram === "fha" && p.occupied && (p.unitCount || 0) >= 3;
+    const eligibleRent = totalGrossRent * 0.75;
+    const selfSuffPass = !selfSuffApplies || eligibleRent >= pitia;
+    const selfSuffMargin = eligibleRent - pitia;
+
+    // DSCR qualifies purely on the property's own rent vs. its own payment.
+    const dscrApplies = p.loanProgram === "dscr";
+    const dscrRatio = pitia > 0 ? tenantRent / pitia : 0;
+    const dscrMin = prog.minDscr != null ? prog.minDscr : 1.0;
+    const dscrPreferredFloor = prog.preferredDscr != null ? prog.preferredDscr : 1.25;
+    const dscrMinPass = !dscrApplies || dscrRatio >= dscrMin;
+    const dscrPreferred = dscrApplies && dscrRatio >= dscrPreferredFloor;
+
+    const maintenance = tenantRent * (a.maintPct / 100);
+    const vacancy = tenantRent * (a.vacPct / 100);
+    const utilities = p.util || 0;
+    const totalExpense = pitia + maintenance + vacancy + utilities;
+    const cushion = tenantRent - totalExpense;
+
+    const qualifies = (!selfSuffApplies || selfSuffPass) && (!dscrApplies || dscrMinPass);
+
+    let status;
+    if (!qualifies) status = "red";
+    else if (cushion >= a.cushion) status = "green";
+    else if (cushion >= 0) status = "yellow";
+    else status = "red";
+
+    const downPayment = p.price * (downPct / 100);
+    const closingCosts = p.price * (a.closingPct / 100);
+
+    // Fannie Mae scales extra reserves off the AGGREGATE UNPAID BALANCE of
+    // your OTHER financed properties (not this one) once you're carrying
+    // several — 2% for 1-4 others, 4% for 5-6, 6% for 7-10. FHA and DSCR
+    // don't work this way, so it only applies to the conventional programs.
+    const scalesForPortfolio = p.loanProgram === "conv_occ" || p.loanProgram === "conv_investor";
+    const financedCount = (a.portfolio && a.portfolio.financedCount) || 0;
+    const otherUPB = (a.portfolio && a.portfolio.otherUPB) || 0;
+    let portfolioReserveExtra = 0;
+    let portfolioPct = 0;
+    if (scalesForPortfolio && financedCount > 0) {
+      portfolioPct = financedCount >= 7 ? 0.06 : financedCount >= 5 ? 0.04 : 0.02;
+      portfolioReserveExtra = otherUPB * portfolioPct;
+    }
+    const reserveRequired = pitia * reserveMonthsBase + portfolioReserveExtra;
+    const cashToClose = downPayment + closingCosts + reserveRequired;
+
+    const fhaLimit = p.loanProgram === "fha" ? (p.fhaLimit || 0) : 0;
+    const hasLimitCheck = fhaLimit > 0;
+    const loanLimitPass = !hasLimitCheck || baseLoan <= fhaLimit;
+    const loanLimitMargin = fhaLimit - baseLoan;
+
+    return {
+      downPct, ratePct, ufmipPct, mipPct, reserveMonths: reserveMonthsBase,
+      baseLoan, ufmip, totalLoan, pi, monthlyTax, monthlyIns, monthlyMip, hoa, pitia,
+      ownerRent, tenantRent, totalGrossRent,
+      selfSuffApplies, eligibleRent, selfSuffPass, selfSuffMargin,
+      dscrApplies, dscrRatio, dscrMin, dscrPreferredFloor, dscrMinPass, dscrPreferred,
+      maintenance, vacancy, utilities, totalExpense, cushion, status, qualifies,
+      downPayment, closingCosts, portfolioReserveExtra, portfolioPct, reserveRequired, cashToClose,
+      hasLimitCheck, loanLimitPass, loanLimitMargin
+    };
+  }
+
+  function recommendProgram(p, a) {
+    const count = (a.portfolio && a.portfolio.financedCount) || 0;
+    if (p.occupied) {
+      if (count === 0) {
+        return `First owner-occupied purchase: FHA at ${a.programs.fha.downPct}% down is the cheapest way in if the self-sufficiency test above passes. If it doesn't, the 5%-down conventional 2-4 unit option has no self-sufficiency test and skips FHA's 1.75% upfront MIP — it'll just run a bit higher rate and needs a bigger check at close.`;
+      }
+      return `You've already got a financed property, so FHA (one at a time, and only while it's your primary residence) is off the table here unless you're vacating the old one. This has to be conventional owner-occupied — 5% down, no self-sufficiency test, qualifies on your income like any other mortgage.`;
+    }
+    if (count <= 4) {
+      return `Pure rental, ${count} other financed ${count === 1 ? "property" : "properties"} so far: conventional investor financing (25% down) is usually the cheaper loan here. DSCR costs more in rate, but it qualifies off this property's own rent instead of your personal income/DTI — worth it specifically if documenting income is the sticking point, not the rate.`;
+    }
+    return `Pure rental with ${count} other financed properties: conventional's reserve math is working against you now — Fannie Mae adds ${count >= 7 ? "6%" : "4%"} of your other loan balances on top of the 6 months required here, and conventional financing caps out at 10 financed properties total. DSCR has no cap and never touches your personal DTI — usually the better path once the portfolio's this size, even at a higher rate.`;
+  }
+
+  function togglePanel(id) {
+    document.getElementById(id).classList.toggle("open");
+  }
+
+  function onProgramChange() {
+    const prog = document.getElementById("f_loanProgram").value;
+    document.getElementById("f_fhaLimitWrap").style.display = prog === "fha" ? "" : "none";
+  }
+
+  function readAssumptionsForm() {
+    return {
+      programs: {
+        fha: {
+          downPct: parseFloat(document.getElementById("pf_fha_down").value) || 0,
+          ratePct: parseFloat(document.getElementById("pf_fha_rate").value) || 0,
+          ufmipPct: parseFloat(document.getElementById("pf_fha_ufmip").value) || 0,
+          mipPct: parseFloat(document.getElementById("pf_fha_mip").value) || 0,
+          reserveMonths: parseFloat(document.getElementById("pf_fha_reserve").value) || 0
+        },
+        conv_occ: {
+          downPct: parseFloat(document.getElementById("pf_co_down").value) || 0,
+          ratePct: parseFloat(document.getElementById("pf_co_rate").value) || 0,
+          mipPct: parseFloat(document.getElementById("pf_co_mip").value) || 0,
+          reserveMonths: parseFloat(document.getElementById("pf_co_reserve").value) || 0
+        },
+        conv_investor: {
+          downPct: parseFloat(document.getElementById("pf_ci_down").value) || 0,
+          ratePct: parseFloat(document.getElementById("pf_ci_rate").value) || 0,
+          mipPct: parseFloat(document.getElementById("pf_ci_mip").value) || 0,
+          reserveMonths: parseFloat(document.getElementById("pf_ci_reserve").value) || 0
+        },
+        dscr: {
+          downPct: parseFloat(document.getElementById("pf_dscr_down").value) || 0,
+          ratePct: parseFloat(document.getElementById("pf_dscr_rate").value) || 0,
+          mipPct: 0,
+          reserveMonths: parseFloat(document.getElementById("pf_dscr_reserve").value) || 0,
+          minDscr: parseFloat(document.getElementById("pf_dscr_mindscr").value) || 0,
+          preferredDscr: parseFloat(document.getElementById("pf_dscr_prefdscr").value) || 0
+        }
+      },
+      maintPct: parseFloat(document.getElementById("a_maintPct").value) || 0,
+      vacPct: parseFloat(document.getElementById("a_vacPct").value) || 0,
+      cushion: parseFloat(document.getElementById("a_cushion").value) || 0,
+      closingPct: parseFloat(document.getElementById("a_closingPct").value) || 0,
+      portfolio: {
+        financedCount: parseFloat(document.getElementById("a_portfolioCount").value) || 0,
+        otherUPB: parseFloat(document.getElementById("a_portfolioUPB").value) || 0
+      }
+    };
+  }
+
+  function fillAssumptionsForm(a) {
+    document.getElementById("pf_fha_down").value = a.programs.fha.downPct;
+    document.getElementById("pf_fha_rate").value = a.programs.fha.ratePct;
+    document.getElementById("pf_fha_ufmip").value = a.programs.fha.ufmipPct;
+    document.getElementById("pf_fha_mip").value = a.programs.fha.mipPct;
+    document.getElementById("pf_fha_reserve").value = a.programs.fha.reserveMonths;
+
+    document.getElementById("pf_co_down").value = a.programs.conv_occ.downPct;
+    document.getElementById("pf_co_rate").value = a.programs.conv_occ.ratePct;
+    document.getElementById("pf_co_mip").value = a.programs.conv_occ.mipPct;
+    document.getElementById("pf_co_reserve").value = a.programs.conv_occ.reserveMonths;
+
+    document.getElementById("pf_ci_down").value = a.programs.conv_investor.downPct;
+    document.getElementById("pf_ci_rate").value = a.programs.conv_investor.ratePct;
+    document.getElementById("pf_ci_mip").value = a.programs.conv_investor.mipPct;
+    document.getElementById("pf_ci_reserve").value = a.programs.conv_investor.reserveMonths;
+
+    document.getElementById("pf_dscr_down").value = a.programs.dscr.downPct;
+    document.getElementById("pf_dscr_rate").value = a.programs.dscr.ratePct;
+    document.getElementById("pf_dscr_reserve").value = a.programs.dscr.reserveMonths;
+    document.getElementById("pf_dscr_mindscr").value = a.programs.dscr.minDscr;
+    document.getElementById("pf_dscr_prefdscr").value = a.programs.dscr.preferredDscr;
+
+    document.getElementById("a_maintPct").value = a.maintPct;
+    document.getElementById("a_vacPct").value = a.vacPct;
+    document.getElementById("a_cushion").value = a.cushion;
+    document.getElementById("a_closingPct").value = a.closingPct;
+
+    document.getElementById("a_portfolioCount").value = a.portfolio.financedCount;
+    document.getElementById("a_portfolioUPB").value = a.portfolio.otherUPB;
+  }
+
+  function clearForm() {
+    ["f_name","f_link","f_price","f_tax","f_ins","f_hoa","f_util","f_unitCount",
+     "f_ownerRent","f_tenantRent","f_downOverride","f_rateOverride","f_fhaLimit"].forEach(id => {
+      document.getElementById(id).value = "";
+    });
+    document.getElementById("f_occupied").value = "yes";
+    document.getElementById("f_loanProgram").value = "fha";
+    onProgramChange();
+  }
+
+  function setLookupStatus(kind, html) {
+    const el = document.getElementById("lookup_status");
+    el.className = "lookup-status show" + (kind ? " " + kind : "");
+    el.innerHTML = html;
+  }
+
+  // Calls this site's own /api/lookup serverless function (see api/lookup.js),
+  // which holds the RentCast API key server-side and does the actual
+  // property-records / value-estimate / rent-estimate calls. This never
+  // talks to RentCast directly from the browser.
+  async function lookupAddress() {
+    const address = document.getElementById("lookup_address").value.trim();
+    if (!address) { document.getElementById("lookup_address").focus(); return; }
+
+    let turnstileToken = "";
+    if (TURNSTILE_SITE_KEY) {
+      const el = document.querySelector('[name="cf-turnstile-response"]');
+      turnstileToken = el ? el.value : "";
+      if (!turnstileToken) {
+        setLookupStatus("err", "Complete the verification check above, then hit Look up again.");
+        return;
+      }
+    }
+
+    const btn = document.getElementById("lookup_btn");
+    btn.disabled = true;
+    btn.textContent = "Looking up…";
+    setLookupStatus(null, "Querying property records, value estimate and rent estimate…");
+
+    let data;
+    try {
+      let url = "/api/lookup?address=" + encodeURIComponent(address);
+      if (turnstileToken) url += "&turnstileToken=" + encodeURIComponent(turnstileToken);
+      const res = await fetch(url);
+      data = await res.json();
+      if (!res.ok) throw new Error(data.error || ("HTTP " + res.status));
+    } catch (e) {
+      setLookupStatus("err", "Lookup failed: " + escapeHtml(e.message) + `<span class="fine">Check that RENTCAST_API_KEY is set on the server and that the address is a full US street address.</span>`);
+      btn.disabled = false;
+      btn.textContent = "Look up";
+      if (window.turnstile && TURNSTILE_SITE_KEY) window.turnstile.reset();
+      return;
+    }
+
+    document.getElementById("f_name").value = data.resolvedAddress || address;
+
+    const notes = [];
+
+    if (data.records && data.records.ok) {
+      if (data.records.unitCount) document.getElementById("f_unitCount").value = data.records.unitCount;
+      if (data.records.annualPropertyTax) document.getElementById("f_tax").value = Math.round(data.records.annualPropertyTax);
+      else notes.push("no tax record returned — check your county assessor");
+    } else {
+      notes.push("property records: " + (data.records && data.records.error || "not found"));
+    }
+
+    if (data.value && data.value.ok && data.value.estimate) {
+      document.getElementById("f_price").value = Math.round(data.value.estimate);
+      notes.push(`AVM value estimate ${fmtMoney(data.value.estimate)} (range ${fmtMoney(data.value.rangeLow)}–${fmtMoney(data.value.rangeHigh)}) — this is NOT the asking price, replace it with the real list price`);
+    } else {
+      notes.push("value estimate: " + (data.value && data.value.error || "not found"));
+    }
+
+    const ru = data.rentPerUnit || {};
+    const rc = ru.rentcast || {};
+    const rm = ru.rentometer || {};
+    // Prefer RentCast's per-unit estimate; fall back to Rentometer's if
+    // RentCast came back empty for this address. When both answer, both
+    // get reported so you're cross-checking one model against another
+    // instead of trusting either alone.
+    const primary = rc.ok && rc.estimate ? rc : (rm.ok && rm.estimate ? rm : null);
+
+    if (primary) {
+      const units = Math.max(1, parseFloat(document.getElementById("f_unitCount").value) || 1);
+      const occupied = document.getElementById("f_occupied").value === "yes";
+      const tenantUnits = occupied ? Math.max(0, units - 1) : units;
+      const suggested = Math.round(primary.estimate * tenantUnits);
+      document.getElementById("f_tenantRent").value = suggested;
+      if (occupied) document.getElementById("f_ownerRent").value = Math.round(primary.estimate);
+
+      const scopeNote = [
+        ru.perUnitSquareFootageUsed ? `~${ru.perUnitSquareFootageUsed} sqft` : null,
+        ru.perUnitBedroomsUsed ? `${ru.perUnitBedroomsUsed}bd` : null
+      ].filter(Boolean).join(", ");
+      const sourceLine = rc.ok && rc.estimate
+        ? `RentCast ${fmtMoney(rc.estimate)}/unit${scopeNote ? " (" + scopeNote + ")" : ""}`
+        : `Rentometer ${fmtMoney(rm.estimate)}/unit (median of ${rm.sampleSize ?? "?"} comps)`;
+      const crossCheck = (rc.ok && rc.estimate && rm.ok && rm.estimate)
+        ? ` · Rentometer's independent estimate: ${fmtMoney(rm.estimate)}/unit (${rm.sampleSize ?? "?"} comps) — ${Math.abs(rc.estimate - rm.estimate) / rc.estimate > 0.15 ? "these disagree by more than 15%, lean on real listings over either model" : "reasonably close to RentCast's"}`
+        : (!rentometerConfigured(data) ? " · Rentometer cross-check off — set RENTOMETER_API_KEY to turn it on" : "");
+
+      notes.push(`rent estimate is PER UNIT — ${sourceLine}${crossCheck}. Filled as ${tenantUnits} tenant unit(s) × that per-unit number; still assumes every unit rents about the same, verify if unit sizes differ.`);
+    } else {
+      notes.push("rent estimate: neither RentCast nor Rentometer returned one for this address — fill rent from real comps manually");
+    }
+
+    setLookupStatus(
+      (data.records?.ok || data.value?.ok || primary) ? "ok" : "err",
+      `Filled from ${escapeHtml(data.resolvedAddress || address)}.<span class="fine">${notes.map(escapeHtml).join(" · ")}</span><span class="fine">Everything above is an automated estimate — this tool still doesn't know the actual listing price, HOA, insurance quote, or condition. Fill those in yourself.</span>`
+    );
+
+    btn.disabled = false;
+    btn.textContent = "Look up";
+    // Turnstile tokens are single-use — reset so the next lookup can get
+    // a fresh one instead of silently failing verification.
+    if (window.turnstile && TURNSTILE_SITE_KEY) window.turnstile.reset();
+  }
+
+  // Injects the Turnstile widget + its script only when a site key is
+  // configured — otherwise this is a no-op and the page never loads
+  // Cloudflare's script at all.
+  function setupTurnstile() {
+    if (!TURNSTILE_SITE_KEY) return;
+    document.getElementById("turnstile_container").innerHTML =
+      `<div class="cf-turnstile" data-sitekey="${escapeAttr(TURNSTILE_SITE_KEY)}"></div>`;
+    const script = document.createElement("script");
+    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
+  function rentometerConfigured(data) {
+    const err = data.rentPerUnit && data.rentPerUnit.rentometer && data.rentPerUnit.rentometer.error;
+    return !(err && err.indexOf("RENTOMETER_API_KEY not set") !== -1);
+  }
+
+  // --- Address autocomplete (Mapbox, via /api/autocomplete) -------------
+  const lookupSession = (crypto.randomUUID ? crypto.randomUUID() : "sess-" + Date.now() + Math.random());
+  let suggestTimer = null;
+  let suggestItems = [];
+  let suggestActiveIdx = -1;
+
+  function hideSuggestions() {
+    const box = document.getElementById("lookup_suggestions");
+    box.classList.remove("show");
+    box.innerHTML = "";
+    suggestItems = [];
+    suggestActiveIdx = -1;
+  }
+
+  function renderSuggestions() {
+    const box = document.getElementById("lookup_suggestions");
+    if (!suggestItems.length) { hideSuggestions(); return; }
+    box.innerHTML = suggestItems.map((s, i) =>
+      `<div class="opt${i === suggestActiveIdx ? " active" : ""}" data-idx="${i}" onmousedown="event.preventDefault(); selectSuggestion(${i})">${escapeHtml(s.label)}</div>`
+    ).join("");
+    box.classList.add("show");
+  }
+
+  function selectSuggestion(i) {
+    const s = suggestItems[i];
+    if (!s) return;
+    document.getElementById("lookup_address").value = s.label;
+    hideSuggestions();
+  }
+
+  async function onAddressInput() {
+    const q = document.getElementById("lookup_address").value.trim();
+    clearTimeout(suggestTimer);
+    if (q.length < 3) { hideSuggestions(); return; }
+    suggestTimer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/autocomplete?q=${encodeURIComponent(q)}&session=${encodeURIComponent(lookupSession)}`);
+        const data = await res.json();
+        suggestItems = data.suggestions || [];
+        suggestActiveIdx = -1;
+        renderSuggestions();
+      } catch (e) {
+        hideSuggestions();
+      }
+    }, 250); // debounced so we're not firing a request per keystroke
+  }
+
+  function onAddressKeydown(e) {
+    if (!suggestItems.length) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      suggestActiveIdx = Math.min(suggestItems.length - 1, suggestActiveIdx + 1);
+      renderSuggestions();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      suggestActiveIdx = Math.max(0, suggestActiveIdx - 1);
+      renderSuggestions();
+    } else if (e.key === "Enter" && suggestActiveIdx >= 0) {
+      e.preventDefault();
+      selectSuggestion(suggestActiveIdx);
+    } else if (e.key === "Escape") {
+      hideSuggestions();
+    }
+  }
+
+  function addProperty() {
+    const name = document.getElementById("f_name").value.trim();
+    const price = parseFloat(document.getElementById("f_price").value);
+    if (!name) { document.getElementById("f_name").focus(); return; }
+    if (!price || price <= 0) { document.getElementById("f_price").focus(); return; }
+
+    const downOverride = document.getElementById("f_downOverride").value;
+    const rateOverride = document.getElementById("f_rateOverride").value;
+
+    const p = {
+      id: "p" + Date.now() + Math.random().toString(36).slice(2, 7),
+      name,
+      link: document.getElementById("f_link").value.trim(),
+      price,
+      tax: parseFloat(document.getElementById("f_tax").value) || 0,
+      ins: parseFloat(document.getElementById("f_ins").value) || 0,
+      hoa: parseFloat(document.getElementById("f_hoa").value) || 0,
+      util: parseFloat(document.getElementById("f_util").value) || 0,
+      unitCount: parseFloat(document.getElementById("f_unitCount").value) || 1,
+      occupied: document.getElementById("f_occupied").value === "yes",
+      loanProgram: document.getElementById("f_loanProgram").value,
+      ownerRent: parseFloat(document.getElementById("f_ownerRent").value) || 0,
+      tenantRent: parseFloat(document.getElementById("f_tenantRent").value) || 0,
+      fhaLimit: parseFloat(document.getElementById("f_fhaLimit").value) || 0
+    };
+    if (downOverride !== "") p.downPct = parseFloat(downOverride);
+    if (rateOverride !== "") p.ratePct = parseFloat(rateOverride);
+
+    state.properties.push(p);
+    saveState();
+    clearForm();
+    render();
+  }
+
+  function deleteProperty(id) {
+    state.properties = state.properties.filter(p => p.id !== id);
+    delete state.expanded[id];
+    saveState();
+    render();
+  }
+
+  function toggleExpand(id) {
+    state.expanded[id] = !state.expanded[id];
+    saveState();
+    render();
+  }
+
+  function editProperty(id) {
+    const p = state.properties.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById("f_name").value = p.name;
+    document.getElementById("f_link").value = p.link || "";
+    document.getElementById("f_price").value = p.price;
+    document.getElementById("f_tax").value = p.tax;
+    document.getElementById("f_ins").value = p.ins;
+    document.getElementById("f_hoa").value = p.hoa;
+    document.getElementById("f_util").value = p.util;
+    document.getElementById("f_unitCount").value = p.unitCount;
+    document.getElementById("f_occupied").value = p.occupied ? "yes" : "no";
+    document.getElementById("f_loanProgram").value = p.loanProgram;
+    document.getElementById("f_ownerRent").value = p.ownerRent;
+    document.getElementById("f_tenantRent").value = p.tenantRent;
+    document.getElementById("f_downOverride").value = p.downPct != null ? p.downPct : "";
+    document.getElementById("f_rateOverride").value = p.ratePct != null ? p.ratePct : "";
+    document.getElementById("f_fhaLimit").value = p.fhaLimit || "";
+    onProgramChange();
+    deleteProperty(id);
+    document.getElementById("addPanel").classList.add("open");
+    document.getElementById("f_name").scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function renderSummary(computed) {
+    const counts = { green: 0, yellow: 0, red: 0 };
+    computed.forEach(c => counts[c.status]++);
+    const el = document.getElementById("summary");
+    el.innerHTML = `
+      <div class="stat"><div class="n">${computed.length}</div><div class="l">Listings</div></div>
+      <div class="stat pass"><div class="n">${counts.green}</div><div class="l">Clear green</div></div>
+      <div class="stat warn"><div class="n">${counts.yellow}</div><div class="l">Tight (yellow)</div></div>
+      <div class="stat fail"><div class="n">${counts.red}</div><div class="l">Doesn't qualify / cover</div></div>
+    `;
+  }
+
+  function render() {
+    const a = state.assumptions;
+    fillAssumptionsForm(a);
+    document.getElementById("assumptionsHint").textContent =
+      `FHA ${a.programs.fha.downPct}%/${a.programs.fha.ratePct}% · Conv-occ ${a.programs.conv_occ.downPct}%/${a.programs.conv_occ.ratePct}% · Investor ${a.programs.conv_investor.downPct}%/${a.programs.conv_investor.ratePct}% · DSCR ${a.programs.dscr.downPct}%/${a.programs.dscr.ratePct}%`;
+
+    const sortSel = document.getElementById("sortSel").value;
+    const computed = state.properties.map(p => ({ p, c: computeProperty(p, a) }));
+
+    computed.sort((x, y) => {
+      if (sortSel === "price") return x.p.price - y.p.price;
+      if (sortSel === "name") return x.p.name.localeCompare(y.p.name);
+      return y.c.cushion - x.c.cushion;
+    });
+
+    renderSummary(computed.map(x => x.c));
+
+    const list = document.getElementById("propList");
+    if (computed.length === 0) {
+      list.innerHTML = `<div class="empty">No listings yet. Add one above — pick the loan program you'd actually use and it'll check whether the deal qualifies, then show your monthly cash cushion.</div>`;
+      return;
+    }
+
+    list.innerHTML = `<div class="prop-list">${computed.map(({ p, c }) => propCard(p, c, a)).join("")}</div>`;
+  }
+
+  function testPillHtml(p, c) {
+    const progLabel = PROGRAM_LABEL[p.loanProgram] || p.loanProgram;
+    if (c.selfSuffApplies) {
+      return c.selfSuffPass
+        ? `<span class="pill pass">${progLabel} · self-suff pass</span>`
+        : `<span class="pill fail">${progLabel} · self-suff fail</span>`;
+    }
+    if (c.dscrApplies) {
+      if (!c.dscrMinPass) return `<span class="pill fail">DSCR ${c.dscrRatio.toFixed(2)}× — below floor</span>`;
+      if (c.dscrPreferred) return `<span class="pill pass">DSCR ${c.dscrRatio.toFixed(2)}×</span>`;
+      return `<span class="pill warn">DSCR ${c.dscrRatio.toFixed(2)}×</span>`;
+    }
+    return `<span class="pill note">${progLabel}</span>`;
+  }
+
+  function qualificationBoxHtml(p, c) {
+    if (c.selfSuffApplies) {
+      return `
+      <div class="verdict-box ${c.selfSuffPass ? 'pass' : 'fail'}">
+        <strong>FHA self-sufficiency test:</strong> 75% of gross rent from all ${p.unitCount} units (incl. your unit at ${fmtMoney(p.ownerRent)}/mo market rent) is ${fmtMoney(c.eligibleRent)}, vs. a ${fmtMoney(c.pitia)} PITIA.
+        ${c.selfSuffPass ? `Passes by ${fmtMoney(c.selfSuffMargin)}/mo.` : `Falls short by ${fmtMoney(Math.abs(c.selfSuffMargin))}/mo — a lender likely won't count this property as self-sufficient for FHA.`}
+      </div>`;
+    }
+    if (c.dscrApplies) {
+      return `
+      <div class="verdict-box ${c.dscrMinPass ? (c.dscrPreferred ? 'pass' : 'warn') : 'fail'}">
+        <strong>DSCR test:</strong> tenant rent ${fmtMoney(c.tenantRent)} ÷ PITIA ${fmtMoney(c.pitia)} = <strong>${c.dscrRatio.toFixed(2)}×</strong>. Lender floor is ${c.dscrMin.toFixed(2)}×, best pricing kicks in at ${c.dscrPreferredFloor.toFixed(2)}×.
+        ${!c.dscrMinPass ? `Below the floor — this property won't qualify for a DSCR loan as priced.` :
+          c.dscrPreferred ? `Clears the preferred tier — should get you the best rate this lender offers.` :
+          `Qualifies, but you're paying for it — expect a worse rate than a property clearing ${c.dscrPreferredFloor.toFixed(2)}×.`}
+      </div>`;
+    }
+    if (p.loanProgram === "fha") {
+      return `
+      <div class="verdict-box note">
+        <strong>No self-sufficiency test</strong> — that FHA rule only kicks in on owner-occupied 3-4 unit purchases. This is ${p.unitCount < 3 ? `a ${p.unitCount}-unit property` : "not owner-occupied"}, so it qualifies on your personal income/DTI like a normal FHA loan.
+      </div>`;
+    }
+    return `
+    <div class="verdict-box note">
+      <strong>No property-level qualification test</strong> — ${PROGRAM_LABEL[p.loanProgram] || "this program"} qualifies you on personal income/DTI through the lender's normal underwriting, not a rent-vs-payment ratio.
+    </div>`;
+  }
+
+  function propCard(p, c, a) {
+    const expanded = !!state.expanded[p.id];
+    const statusLabel = { green: "Clears the line", yellow: "Tight", red: !c.qualifies ? "Doesn't qualify" : "Short" }[c.status];
+    const linkHtml = p.link
+      ? `<a class="link" href="${escapeAttr(p.link)}" target="_blank" rel="noopener">${escapeHtml(shortenUrl(p.link))} ↗</a>`
+      : "";
+
+    return `
+      <div class="prop ${c.status} ${expanded ? "expanded" : ""}" id="row-${p.id}">
+        <div class="prop-row" onclick="toggleExpand('${p.id}')">
+          <div class="prop-addr">
+            <div class="name">${escapeHtml(p.name)}</div>
+            ${linkHtml}
+          </div>
+          <div class="prop-metric">
+            <div class="v">${fmtMoney(p.price)}</div>
+            <div class="l">Price</div>
+          </div>
+          <div class="prop-metric">
+            <div class="v">${fmtMoney(c.tenantRent)}</div>
+            <div class="l">Tenant rent</div>
+          </div>
+          <div class="prop-metric cushion">
+            <div class="v">${fmtMoney(c.cushion)}</div>
+            <div class="l">${statusLabel}</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            ${testPillHtml(p, c)}
+            <svg class="chev-mini" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="prop-detail">
+          <div class="breakdown">
+            <div>
+              <h3>Monthly housing payment (PITIA)</h3>
+              <div class="lines">
+                <div class="ln"><span>Principal &amp; interest</span><span class="v">${fmtMoney(c.pi)}</span></div>
+                <div class="ln"><span>Property tax</span><span class="v">${fmtMoney(c.monthlyTax)}</span></div>
+                <div class="ln"><span>Insurance</span><span class="v">${fmtMoney(c.monthlyIns)}</span></div>
+                <div class="ln"><span>${p.loanProgram === 'fha' ? 'FHA MIP' : 'PMI'}</span><span class="v">${fmtMoney(c.monthlyMip)}</span></div>
+                <div class="ln"><span>HOA</span><span class="v">${fmtMoney(c.hoa)}</span></div>
+                <div class="ln total"><span>PITIA</span><span class="v">${fmtMoney(c.pitia)}</span></div>
+              </div>
+              ${qualificationBoxHtml(p, c)}
+            </div>
+            <div>
+              <h3>Cash flow</h3>
+              <div class="lines">
+                <div class="ln"><span>Tenant rent</span><span class="v">${fmtMoney(c.tenantRent)}</span></div>
+                <div class="ln"><span>PITIA</span><span class="v">-${fmtMoney(c.pitia)}</span></div>
+                <div class="ln"><span>Maintenance reserve (${a.maintPct}%)</span><span class="v">-${fmtMoney(c.maintenance)}</span></div>
+                <div class="ln"><span>Vacancy reserve (${a.vacPct}%)</span><span class="v">-${fmtMoney(c.vacancy)}</span></div>
+                <div class="ln"><span>Owner-paid utilities</span><span class="v">-${fmtMoney(c.utilities)}</span></div>
+                <div class="ln total"><span>Monthly cushion</span><span class="v">${fmtMoney(c.cushion)}</span></div>
+              </div>
+              <div class="verdict-box ${c.status === 'red' ? 'fail' : 'pass'}">
+                Down payment at ${c.downPct}%: <strong>${fmtMoney(c.downPayment)}</strong>. ${
+                  !c.qualifies ? `Doesn't clear the loan program's own qualification test above, regardless of cushion.` :
+                  c.status === 'green' ? `Rent covers everything with a ${fmtMoney(c.cushion)}/mo buffer above your $${a.cushion} line.` :
+                  c.status === 'yellow' ? `Covers the house but the buffer is under your $${a.cushion} line — tight if a unit sits vacant.` :
+                  `Rent doesn't fully cover the house — you'd be paying ${fmtMoney(Math.abs(c.cushion))}/mo out of pocket.`
+                }
+              </div>
+            </div>
+          </div>
+          <div class="cash-block">
+            <h3>Cash to close &amp; reserves</h3>
+            <div class="lines cash-lines">
+              <div class="ln"><span>Down payment (${c.downPct}%)</span><span class="v">${fmtMoney(c.downPayment)}</span></div>
+              <div class="ln"><span>Est. closing costs (${a.closingPct}%)</span><span class="v">${fmtMoney(c.closingCosts)}</span></div>
+              <div class="ln"><span>Base reserves (${c.reserveMonths} mo PITIA)</span><span class="v">${fmtMoney(c.pitia * c.reserveMonths)}</span></div>
+              ${c.portfolioReserveExtra > 0 ? `<div class="ln"><span>Portfolio reserve add-on (${(c.portfolioPct * 100).toFixed(0)}% of other balances)</span><span class="v">${fmtMoney(c.portfolioReserveExtra)}</span></div>` : ""}
+              <div class="ln total"><span>Total cash needed at closing</span><span class="v">${fmtMoney(c.cashToClose)}</span></div>
+            </div>
+            <div class="verdict-box note">
+              ${p.loanProgram === 'fha'
+                ? `Reserves aren't cash you spend — they just have to be sitting in your account, untouched, on closing day. Higher debts elsewhere relative to your income can push FHA's 3 months to 6. It's a separate checkbox from the self-sufficiency test — a property can pass that test and you can still get stuck here without this extra cash saved.`
+                : p.loanProgram === 'dscr'
+                  ? `DSCR lenders still want proof-of-funds reserves even though they don't look at your DTI for the loan itself — same rule, it's cash sitting untouched, not money you hand over.`
+                  : `Conventional lending wants this sitting untouched in your account at closing — proof of funds, not money you hand over. The portfolio add-on line above only shows up once you're carrying other financed properties; it scales off their combined balance, not this one.`}
+            </div>
+            ${c.hasLimitCheck ? `
+            <div class="verdict-box ${c.loanLimitPass ? 'pass' : 'fail'}" style="margin-top:8px;">
+              <strong>FHA loan limit check:</strong> base loan of ${fmtMoney(c.baseLoan)} vs. this county's limit of ${fmtMoney(p.fhaLimit)}.
+              ${c.loanLimitPass ? `Under the limit by ${fmtMoney(c.loanLimitMargin)}.` : `Over the limit by ${fmtMoney(Math.abs(c.loanLimitMargin))} — FHA won't insure the excess, so you'd need a bigger down payment or a different loan.`}
+            </div>` : ""}
+          </div>
+          <div class="rec-block">
+            <h3>Loan recommendation</h3>
+            <div class="verdict-box note">${recommendProgram(p, a)}</div>
+          </div>
+          <div class="detail-actions">
+            <button class="btn-ghost" type="button" onclick="event.stopPropagation(); editProperty('${p.id}')">Edit</button>
+            <button class="btn-text btn-danger" type="button" onclick="event.stopPropagation(); deleteProperty('${p.id}')">Delete</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
+  function shortenUrl(u) {
+    try {
+      const url = new URL(u);
+      return url.hostname.replace(/^www\./, "");
+    } catch (e) { return u.slice(0, 30); }
+  }
+
+  function init() {
+    state = loadState();
+    applySeeds();
+    fillAssumptionsForm(state.assumptions);
+    const ids = ["pf_fha_down","pf_fha_rate","pf_fha_ufmip","pf_fha_mip","pf_fha_reserve",
+      "pf_co_down","pf_co_rate","pf_co_mip","pf_co_reserve",
+      "pf_ci_down","pf_ci_rate","pf_ci_mip","pf_ci_reserve",
+      "pf_dscr_down","pf_dscr_rate","pf_dscr_reserve","pf_dscr_mindscr","pf_dscr_prefdscr",
+      "a_maintPct","a_vacPct","a_cushion","a_closingPct","a_portfolioCount","a_portfolioUPB"];
+    ids.forEach(id => {
+      document.getElementById(id).addEventListener("input", () => {
+        state.assumptions = readAssumptionsForm();
+        saveState();
+        render();
+      });
+    });
+    onProgramChange();
+
+    setupTurnstile();
+
+    const addrInput = document.getElementById("lookup_address");
+    addrInput.addEventListener("input", onAddressInput);
+    addrInput.addEventListener("keydown", onAddressKeydown);
+    addrInput.addEventListener("blur", () => setTimeout(hideSuggestions, 150));
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".lookup-field")) hideSuggestions();
+    });
+
+    render();
+  }
+
+  init();
+</script>
+</body>
+</html>
