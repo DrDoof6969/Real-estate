@@ -71,14 +71,14 @@ you at `/api/health` which ones are still missing.
 | **Upstash Redis** | the shared cache, the spend caps, and rate limiting that actually holds across instances. **This is the difference between a $74 bill and a $2,000 one** | Free tier: 500K commands/mo, enough for this | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | [upstash.com](https://upstash.com) |
 | **Cloudflare Turnstile** | the only thing that stops a script from draining your API budget. Rate limiting slows an abuser; this stops them | Free, no usage cap | `TURNSTILE_SECRET_KEY`, `TURNSTILE_SITE_KEY` | [dash.cloudflare.com](https://dash.cloudflare.com/) → Turnstile → Add site |
 | **Vercel Pro** | Hobby is licensed for personal, non-commercial use only, and its limits aren't sized for this | $20/mo | — | Vercel dashboard → Settings → Plans |
-| **A domain** | — | ~$10-15/yr | `ALLOWED_ORIGINS` | Namecheap, Cloudflare, Porkbun |
+| **A domain** | Turnstile site keys are bound to a hostname and `ALLOWED_ORIGINS` needs a stable origin to lock against — on a rotating `*.vercel.app` preview URL neither the bot check nor the origin lock can be configured properly | ~$10-15/yr | `ALLOWED_ORIGINS` | Namecheap, Cloudflare, Porkbun |
 
 Strongly recommended, all free:
 
 | Service | Why | Env var |
 |---|---|---|
 | **Slack or Discord webhook** | you get a message when the budget is exhausted, a provider goes down, or cache writes start failing — instead of finding out from an invoice | `ALERT_WEBHOOK_URL` |
-| **Better Stack** or **UptimeRobot** | point it at `/api/health` (which never spends a metered API call). It returns 503 when the site can't serve lookups | — |
+| **Better Stack** or **UptimeRobot** | **this site fails invisibly.** `index.html` is static and the calculator runs in the browser, so if the functions die the page still loads, still looks right, and the math still works — only the lookup silently stops filling fields. Nobody reports that. And the webhook alerts above can't catch it, because they fire from inside a running request: if the deployment is down or a function errors on startup, no request runs, so nothing alerts. A monitor on `/api/health` is the only thing in the stack that notices *nothing is running* rather than *a request went wrong*. Point it there every 5 minutes (it spends no metered API calls) and alert on non-200 | — |
 | **Cloudflare** (proxy the domain) | DDoS protection and a caching layer in front of Vercel, so a flood never reaches your functions | — |
 | **Vercel log drain** → Better Stack / Axiom / Datadog | every request emits one structured JSON line. A drain makes them searchable | — |
 | **Rentometer** | second, independent rent estimate to cross-check RentCast | `RENTOMETER_API_KEY` |
